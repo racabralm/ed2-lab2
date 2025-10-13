@@ -11,23 +11,21 @@ public class AVL extends BST {
         super();
     }
     
-    // ===================================================================
-    // TAREFA DA PESSOA 1: INSERÇÃO COM AUTO-BALANCEAMENTO
-    // ===================================================================
+// INSERT ---------------------------------------------------------
 
     @Override
     public void insert(int data) {
-        // TODO Pessoa 1: Chame a versão recursiva e privada do insert,
-        // atribuindo o resultado à raiz da árvore ('this.root').
+        // chama a insercao recursiva e atualiza a raiz
         this.root = insert(this.root, data);
     }
 
     private Node insert(Node node, int data) {
-        // Passo 1: Inserção padrão de uma BST.
+        // se chega em um ponto nulo, insere o novo no
         if (node == null) {
             return new Node(data);
         }
 
+        // navega para a esquerda ou direita
         if (data < node.getData()) {
             Node leftChild = insert(node.getLeft(), data);
             node.setLeft(leftChild);
@@ -37,97 +35,88 @@ public class AVL extends BST {
             node.setRight(rightChild);
             rightChild.setParent(node);
         } else {
-            return node; // Chave duplicada não é inserida.
+            // chave duplicada, retorna o no sem alteracao
+            return node; 
         }
 
-        // Passo 2: Balancear o nó atual (no caminho de volta da recursão).
-        // TODO Pessoa 1: Chame o método 'balance(node)' e retorne o resultado.
+        // apos inserir, balanceia o no no caminho de volta
         return balance(node);
     }
 
-    // TODO Pessoa 1: Implementar o método de balanceamento.
-    // Este método verifica o fator de balanceamento e aplica a rotação apropriada.
     private Node balance(Node node) {
+        // se o no e nulo, nao ha o que balancear
         if (node == null) return null;
 
+        // calcula o fator de balanceamento
         int balanceFactor = node.getBalanceFactor();
 
-        // CASO 1: Árvore desbalanceada para a direita (FB > 1)
+        // arvore pesada para a direita (fator > 1)
         if (balanceFactor > 1) {
-            // Verifica se é Rotação Simples (RR) ou Dupla (RL)
+            // se o filho direito tambem pende para a direita, e rotacao simples
             if (node.getRight() != null && node.getRight().getBalanceFactor() >= 0) {
-                // Rotação Simples à Esquerda (RR)
                 return rotateLeft(node);
+            // senao, e rotacao dupla
             } else {
-                // Rotação Dupla Direita-Esquerda (RL)
                 return rotateRightLeft(node);
             }
         }
 
-        // CASO 2: Árvore desbalanceada para a esquerda (FB < -1)
+        // arvore pesada para a esquerda (fator < -1)
         if (balanceFactor < -1) {
-            // TODO Pessoa 1: Implementar a lógica para o desbalanceamento à esquerda.
-            // Verifique se é Rotação Simples (LL) ou Dupla (LR) e chame o método correto.
+            // se o filho esquerdo tambem pende para a esquerda, e rotacao simples
             if (node.getLeft() != null && node.getLeft().getBalanceFactor() <= 0) {
-                // Rotação Simples à Direita (LL)
                 return rotateRight(node);
+            // senao, e rotacao dupla
             } else {
-                // Rotação Dupla Esquerda-Direita (LR)
                 return rotateLeftRight(node);
             }
         }
         
-        // Se a árvore já está balanceada, retorna o próprio nó.
+        // se ja esta balanceado, retorna o proprio no
         return node;
     }
-
-
-    // ===================================================================
-    // TAREFA DA PESSOA 2: REMOÇÃO COM AUTO-BALANCEAMENTO
-    // ===================================================================
     
+// REMOVE ---------------------------------------------------------
+
     public void remove(int data) {
-        // TODO Pessoa 2: Chame a versão recursiva e privada do remove,
-        // atribuindo o resultado à raiz da árvore ('this.root').
+        // chama a remocao recursiva e atualiza a raiz
         this.root = remove(this.root, data);
     }
 
     private Node remove(Node node, int data) {
-        // TODO Pessoa 2: Implementar a lógica de remoção de uma BST.
-        // Passo 1: Encontre o nó a ser removido.
-        if (node == null) return null;
+        // nao encontrou o no para remover
+        if (node == null) {
+            return null;
+        }
 
+        // busca o no recursivamente
         if (data < node.getData()) {
             node.setLeft(remove(node.getLeft(), data));
         } else if (data > node.getData()) {
             node.setRight(remove(node.getRight(), data));
         } else {
-            // Nó encontrado! Trate os 3 casos de remoção:
-            // 1. Nó é folha
-            // 2. Nó tem um filho
-            // 3. Nó tem dois filhos (neste caso, encontre o sucessor)
-            if (node.getLeft() == null || node.getRight() == null) {
-                Node temp = (node.getLeft() != null) ? node.getLeft() : node.getRight();
-                if (temp == null) { // Sem filhos
-                    node = null;
-                } else { // Um filho
-                    node = temp; 
-                }
-            } else { // Dois filhos
-                Node successor = findMin(node.getRight());
-                node.setData(successor.getData());
-                node.setRight(remove(node.getRight(), successor.getData()));
+            // encontrou o no a ser removido
+            // caso com 0 ou 1 filho
+            if (node.getLeft() == null) {
+                return node.getRight();
+            } else if (node.getRight() == null) {
+                return node.getLeft();
             }
+
+            // caso com 2 filhos
+            // encontra o sucessor (menor no da subarvore direita)
+            Node successor = findMin(node.getRight());
+            // copia o valor do sucessor para o no atual
+            node.setData(successor.getData());
+            // remove o sucessor da sua posicao original
+            node.setRight(remove(node.getRight(), successor.getData()));
         }
         
-        if (node == null) return null;
-
-        // Passo 2: Balancear o nó atual (no caminho de volta da recursão).
-        // TODO Pessoa 2: Chame o método 'balance(node)' e retorne o resultado.
+        // balanceia o no no caminho de volta da recursao
         return balance(node);
     }
     
-    // Método auxiliar para a remoção (já pode ser usado)
+    // metodo auxiliar para achar o menor valor a partir de um no
     private Node findMin(Node node) {
         while (node.getLeft() != null) {
             node = node.getLeft();
@@ -135,41 +124,57 @@ public class AVL extends BST {
         return node;
     }
 
-
-    // ===================================================================
-    // MÉTODOS DE ROTAÇÃO (JÁ PRONTOS DO LAB2A)
-    // ===================================================================
+    // rotaciona para a esquerda (caso RR)
     private Node rotateLeft(Node node) { 
         Node newRoot = node.getRight();
-        node.setRight(newRoot.getLeft());
-        if (newRoot.getLeft() != null) {
-            newRoot.getLeft().setParent(node);
-        }
+        Node leftOfNewRoot = newRoot.getLeft();
+
+        // executa a rotacao
         newRoot.setLeft(node);
+        node.setRight(leftOfNewRoot);
+
+        // atualiza as referencias de pai
         newRoot.setParent(node.getParent());
         node.setParent(newRoot);
+        if (leftOfNewRoot != null) {
+            leftOfNewRoot.setParent(node);
+        }
+
         return newRoot;
     }
 
+    // rotaciona para a direita (caso LL)
     private Node rotateRight(Node node) { 
         Node newRoot = node.getLeft();
-        node.setLeft(newRoot.getRight());
-        if (newRoot.getRight() != null) {
-            newRoot.getRight().setParent(node);
-        }
+        Node rightOfNewRoot = newRoot.getRight();
+
+        // executa a rotacao
         newRoot.setRight(node);
+        node.setLeft(rightOfNewRoot);
+
+        // atualiza as referencias de pai
         newRoot.setParent(node.getParent());
         node.setParent(newRoot);
+        if (rightOfNewRoot != null) {
+            rightOfNewRoot.setParent(node);
+        }
+
         return newRoot;
     }
 
+    // rotacao dupla (caso LR)
     private Node rotateLeftRight(Node node) { 
+        // primeiro rotaciona o filho a esquerda
         node.setLeft(rotateLeft(node.getLeft()));
+        // depois rotaciona o proprio no a direita
         return rotateRight(node);
     }
 
-    private Node rotateRightLeft(Node node) { 
+    // rotacao dupla (caso RL)
+    private Node rotateRightLeft(Node node) {
+        // primeiro rotaciona o filho a direita
         node.setRight(rotateRight(node.getRight()));
+        // depois rotaciona o proprio no a esquerda
         return rotateLeft(node);
     }
 }
