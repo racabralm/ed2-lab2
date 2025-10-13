@@ -139,8 +139,37 @@ public class AVL extends BST {
     // ===================================================================
     // MÉTODOS DE ROTAÇÃO (JÁ PRONTOS DO LAB2A)
     // ===================================================================
-    private Node rotateLeft(Node node) { /* ...código do Lab2a... */ }
-    private Node rotateRight(Node node) { /* ...código do Lab2a... */ }
-    private Node rotateLeftRight(Node node) { /* ...código do Lab2a... */ }
-    private Node rotateRightLeft(Node node) { /* ...código do Lab2a... */ }
+    private Node rotateLeft(Node node) { 
+        Node newRoot = node.getRight();
+        node.setRight(newRoot.getLeft());
+        if (newRoot.getLeft() != null) {
+            newRoot.getLeft().setParent(node);
+        }
+        newRoot.setLeft(node);
+        newRoot.setParent(node.getParent());
+        node.setParent(newRoot);
+        return newRoot;
+    }
+
+    private Node rotateRight(Node node) { 
+        Node newRoot = node.getLeft();
+        node.setLeft(newRoot.getRight());
+        if (newRoot.getRight() != null) {
+            newRoot.getRight().setParent(node);
+        }
+        newRoot.setRight(node);
+        newRoot.setParent(node.getParent());
+        node.setParent(newRoot);
+        return newRoot;
+    }
+
+    private Node rotateLeftRight(Node node) { 
+        node.setLeft(rotateLeft(node.getLeft()));
+        return rotateRight(node);
+    }
+
+    private Node rotateRightLeft(Node node) { 
+        node.setRight(rotateRight(node.getRight()));
+        return rotateLeft(node);
+    }
 }
