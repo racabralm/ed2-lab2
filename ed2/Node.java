@@ -62,6 +62,7 @@ public class Node {
 		return left;
 	}
 
+    // CORREÇÃO: Removemos updateBalanceFactor() para evitar recursão infinita (StackOverflowError)
 	public void setLeft(Node left) {
 		this.left = left;
 		
@@ -69,13 +70,14 @@ public class Node {
 			this.left.setParent(this);
 		}
 
-		updateBalanceFactor();
+		// updateBalanceFactor(); <--- REMOVIDO!
 	}
 
 	public Node getRight() {
 		return right;
 	}
 
+    // CORREÇÃO: Removemos updateBalanceFactor() para evitar recursão infinita (StackOverflowError)
 	public void setRight(Node right) {
 		this.right = right;
 		
@@ -83,7 +85,7 @@ public class Node {
 			this.right.setParent(this);
 		}
 		
-		updateBalanceFactor();
+		// updateBalanceFactor(); <--- REMOVIDO!
 	}
 
 	public boolean hasLeftChild() {

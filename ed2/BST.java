@@ -53,24 +53,23 @@ public class BST extends BinaryTree {
 	}
 	
 	protected Node insert(Node node, Node parent, int data) {
-		if (node == null) {
-			return new Node(data, parent);
-		}
+    if (node == null) {
+        return new Node(data, parent);
+    }
 
-		int diff = data - node.getData();
-		
-		if (diff < 0) {
-			node.setLeft(insert(node.getLeft(), node, data));
-		} else if (diff > 0) {
-			node.setRight(insert(node.getRight(), node, data));
-		} else {
-			// Nessa implementação, não é permitida a inserção de duplicatas na BST.
-			// Portanto, não fazemos nada (esse else pode inclusive ser removido...).
-			throw new RuntimeException("Essa BST não pode ter duplicatas!");
-		}
-		
-		return node;
-	}
+    int diff = data - node.getData();
+    
+    if (diff < 0) {
+        node.setLeft(insert(node.getLeft(), node, data));
+    } else if (diff > 0) {
+        node.setRight(insert(node.getRight(), node, data));
+    } else {
+        //Se for uma duplicata (diff == 0), simplesmente retorne o nó existente.
+        return node;
+    }
+    
+    return node;
+}
 	
 	public void remove(int data) {
 		root = remove(root, data);

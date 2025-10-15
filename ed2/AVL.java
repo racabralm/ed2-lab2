@@ -5,6 +5,8 @@
  * Rute Willemann - 10436781
  */
 
+package ed2;
+
 public class AVL extends BST {
 
     public AVL() {
@@ -87,7 +89,8 @@ public class AVL extends BST {
         this.root = remove(this.root, data);
     }
 
-    private Node remove(Node node, int data) {
+    // Corrigido para 'protected' para sobrescrever BST.remove
+    protected Node remove(Node node, int data) {
         // nao encontrou o no para remover
         if (node == null) {
             return null;

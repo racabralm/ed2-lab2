@@ -34,6 +34,11 @@ public class BinaryTree {
 		this.root = root;
 	}
 
+	// Método adicionado para o acesso à raiz a partir da classe Main
+	public Node getRoot() {
+		return this.root;
+	}
+
 	public boolean isEmpty() {
 		return root == null;
 	}

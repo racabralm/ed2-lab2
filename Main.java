@@ -9,6 +9,9 @@
  * 2. [Ex: Baeldung - AVL Tree in Java]
  */
 
+import ed2.AVL; 
+import ed2.Node;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -18,30 +21,42 @@ public class Main {
         
         System.out.println("--- INÍCIO DOS TESTES DO LAB2B ---");
 
-        // TODO Pessoa 3: Teste (a): Inserir 1, 2, 3 (deve causar rotação RR)
-        System.out.println("\n--- Teste (a): Inserindo 1, 2, 3 ---");
+        // Teste (a): Inserir 1, 2, 3 (deve causar rotação RR)
+        System.out.println("\n--- Teste (a): Inserindo 1, 2, 3 (Rotação LL/Esquerda) ---");
         AVL avlA = new AVL();
         avlA.insert(1);
         avlA.insert(2);
         avlA.insert(3);
         printTreeDetails(avlA.getRoot());
 
-        // TODO Pessoa 3: Teste (b): Inserir 3, 2, 1 (deve causar rotação LL)
-        System.out.println("\n--- Teste (b): Inserindo 3, 2, 1 ---");
-        // Crie uma nova árvore, insira os nós e chame printTreeDetails().
+        // Teste (b): Inserir 3, 2, 1 (deve causar rotação LL)
+        System.out.println("\n--- Teste (b): Inserindo 3, 2, 1 (Rotação RR/Direita) ---");
+        AVL avlB = new AVL();
+        avlB.insert(3);
+        avlB.insert(2);
+        avlB.insert(1);
+        printTreeDetails(avlB.getRoot());
         
-        // TODO Pessoa 3: Teste (c): Inserir 3, 1, 2 (deve causar rotação LR)
-        System.out.println("\n--- Teste (c): Inserindo 3, 1, 2 ---");
-        // Crie uma nova árvore, insira os nós e chame printTreeDetails().
+        // Teste (c): Inserir 3, 1, 2 (deve causar rotação LR)
+        System.out.println("\n--- Teste (c): Inserindo 3, 1, 2 (Rotação Esquerda-Direita) ---");
+        AVL avlC = new AVL();
+        avlC.insert(3);
+        avlC.insert(1);
+        avlC.insert(2);
+        printTreeDetails(avlC.getRoot());
 
-        // TODO Pessoa 3: Teste (d): Inserir 1, 3, 2 (deve causar rotação RL)
-        System.out.println("\n--- Teste (d): Inserindo 1, 3, 2 ---");
-        // Crie uma nova árvore, insira os nós e chame printTreeDetails().
+        // Teste (d): Inserir 1, 3, 2 (deve causar rotação RL)
+        System.out.println("\n--- Teste (d): Inserindo 1, 3, 2 (Rotação Direita-Esquerda) ---");
+        AVL avlD = new AVL();
+        avlD.insert(1);
+        avlD.insert(3);
+        avlD.insert(2);
+        printTreeDetails(avlD.getRoot());
 
         System.out.println("\n-------------------------------------------------");
         System.out.println("--- MONTANDO ÁRVORE PARA TESTES DE REMOÇÃO ---");
         
-        // TODO Pessoa 3: Teste (e): Montar a árvore base para os testes de remoção.
+        // Teste (e): Montar a árvore base para os testes de remoção.
         System.out.println("\n--- Teste (e): Inserindo 5, 4, 3, 1, 2, 6, 7, 9, 8 ---");
         AVL avlParaRemocao = new AVL();
         int[] chaves = {5, 4, 3, 1, 2, 6, 7, 9, 8};
@@ -51,17 +66,23 @@ public class Main {
         System.out.println("Árvore após todas as inserções (item e):");
         printTreeDetails(avlParaRemocao.getRoot());
 
-        // TODO Pessoa 3: Teste (f): Remover o nó 4 da árvore anterior.
+        // Teste (f): Remover o nó 4 da árvore anterior.
         System.out.println("\n--- Teste (f): Removendo o nó 4 ---");
-        // Chame o método remove() na árvore 'avlParaRemocao' e depois chame printTreeDetails().
+        avlParaRemocao.remove(4);
+        System.out.println("Árvore após a remoção do nó 4:");
+        printTreeDetails(avlParaRemocao.getRoot());
         
-        // TODO Pessoa 3: Teste (g): Remover o nó 5 da árvore anterior.
+        // Teste (g): Remover o nó 5 da árvore anterior.
         System.out.println("\n--- Teste (g): Removendo o nó 5 ---");
-        // Continue usando a mesma árvore, remova o nó 5 e chame printTreeDetails().
+        avlParaRemocao.remove(5);
+        System.out.println("Árvore após a remoção do nó 5:");
+        printTreeDetails(avlParaRemocao.getRoot());
 
-        // TODO Pessoa 3: Teste (h): Remover o nó 1 da árvore anterior.
+        // Teste (h): Remover o nó 1 da árvore anterior.
         System.out.println("\n--- Teste (h): Removendo o nó 1 ---");
-        // Continue usando a mesma árvore, remova o nó 1 e chame printTreeDetails().
+        avlParaRemocao.remove(1);
+        System.out.println("Árvore após a remoção do nó 1:");
+        printTreeDetails(avlParaRemocao.getRoot());
         
         System.out.println("\n--- FIM DOS TESTES ---");
     }
