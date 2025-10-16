@@ -14,11 +14,6 @@ import ed2.Node;
 
 public class Main {
     public static void main(String[] args) {
-
-        // ===================================================================
-        // TAREFA DA PESSOA 3: TESTES DE INSERÇÃO E REMOÇÃO
-        // ===================================================================
-        
         System.out.println("--- INÍCIO DOS TESTES DO LAB2B ---");
 
         // Teste (a): Inserir 1, 2, 3 (deve causar rotação RR)
